@@ -18,6 +18,7 @@ public class Customer {
     protected double balance;
     protected double transactionAmount;
     protected double transferAmount;
+    protected int id;
 
     /**
      * Constructs a new Customer with the specified details.
@@ -79,16 +80,16 @@ public class Customer {
      * @param receiver the customer receiving the transfer
      * @return true if the transfer is successful, false otherwise
      */
-    public boolean performTransfer(Customer sender, double transferAmount, Customer receiver) {
+    public boolean performTransfer(double transferAmount, Customer receiver) {
         // Check for null sender and receiver
-        if (sender == null || receiver == null) {
+        if (this == null || receiver == null) {
             System.err.println("Invalid sender or receiver");
             return false;
         }
         // Check if iD1 has sufficient balance for the transfer
-        if (sender.balance >= transferAmount) {
+        if (this.balance >= transferAmount) {
             // Perform the transfer
-            sender.balance -= transferAmount;
+            this.balance -= transferAmount;
             receiver.balance += transferAmount;
             // Transfer successful
             return true;
@@ -97,5 +98,14 @@ public class Customer {
             // Transfer failed
             return false;
         }
+    }
+
+    /**
+     * Gets the ID of the customer.
+     * 
+     * @return The ID of the customer.
+     */
+    public int getId() {
+        return this.accountId;
     }
 }
