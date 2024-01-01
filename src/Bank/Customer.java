@@ -62,13 +62,18 @@ public class Customer {
     }
 
     /**
-     * Performs a transaction by updating the customer's balance.
+     * Performs a transaction by updating the customer's account.
+     * The transaction amount can be positive for deposits or
+     * negative for withdrawals.
      *
-     * @param transactionAmount the amount to be transacted
-     * @return the updated account balance after the transaction
+     * @param transactionAmount The amount to be transacted. Positive for deposit,
+     *                          negative for withdrawal.
+     * @return The updated account balance after the transaction.
      */
     public double performTransaction(double transactionAmount) {
+        // Perform transaction
         balance += transactionAmount;
+        // Return the new balance after the transaction
         return balance;
     }
 

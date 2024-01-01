@@ -57,6 +57,7 @@ public class App {
                         "2 = Transfer money\n" +
                         "3 = Perform transaction");
                 String response = scanner.nextLine();
+                System.out.println("");
                 if ("0".equals(response)) {
                     // User wants to register as a new customer
                     System.out.println("Please enter your surname:");
@@ -74,7 +75,7 @@ public class App {
                             balance = Double.parseDouble(balanceInput);
                             break; // Exit the loop if parsing is successful
                         } catch (NumberFormatException e) {
-                            System.err.println("Invalid input. Please enter an Integer for the balance.");
+                            System.err.println("Invalid input. Please enter an Integer for the balance.\n");
                             balanceInput = scanner.nextLine(); // Ask for input again
                         }
                     }
@@ -91,18 +92,18 @@ public class App {
                                 System.out.println(c.toString());
                             }
                         } else {
-                            System.out.println("No data available yet.");
+                            System.out.println("No data available yet.\n");
                         }
                     } catch (Exception e) {
-                        System.err.println("Something went wrong. Try again");
+                        System.err.println("Something went wrong. Try again\n");
                         response = scanner.nextLine();
                     }
                 } else if ("2".equals(response)) {
-                    System.out.println("Please enter the AccountID of the sender.");
+                    System.out.println("Please enter the AccountID of the sender.\n");
                     int senderId = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Please enter the AccountID of the receiver.");
+                    System.out.println("Please enter the AccountID of the receiver.\n");
                     int receiverId = Integer.parseInt(scanner.nextLine());
-                    System.out.println("Please enter the amount of the money which is to be transfered.");
+                    System.out.println("Please enter the amount of the money which is to be transfered.\n");
                     double transferAmountInput = Double.parseDouble(scanner.nextLine());
 
                     // Find sender and receiver in the customer list
@@ -113,21 +114,41 @@ public class App {
                         // Perform transfer
                         boolean transferSuccessful = sender.performTransfer(transferAmountInput, receiver);
                         if (transferSuccessful) {
-                            System.out.println("Transfer successful!");
+                            System.out.println("Transfer successful!\n");
                         } else {
-                            System.err.println("Transfer failed. Insufficient balance!");
+                            System.err.println("Transfer failed. Insufficient balance!\n");
                         }
                     } else {
-                        System.err.println("Invalid sender or receiver!");
+                        System.err.println("Invalid sender or receiver!\n");
+                    }
+                } else if ("3".equals(response)) {
+                    System.out.println("Please enter the account ID: \n");
+                    int senderId = Integer.parseInt(scanner.nextLine());
+                    System.out.println(
+                            "Please enter the amount of transaction. Use '+'' for deposit and '-' for withdrawal.\n");
+                    double transactionAmount = Double.parseDouble(scanner.nextLine());
+
+                    // Find sender in the customer list
+                    Customer sender = findCustomerById(senderId);
+
+                    if (sender != null) {
+                        // Perform transaction
+                        double newBalance = sender.performTransaction(transactionAmount);
+                        // Check if the transaction was successful
+                        if (newBalance >= 0) {
+                            System.out.println("Transaction successful! New Balance: " + newBalance + "\n");
+                        } else {
+                            System.err.println("Transaction failed. Insufficient balance!\n");
+                        }
                     }
                 } else {
                     /* further functions */
                 }
             } catch (IllegalStateException e) {
-                System.err.println("Something went wrong. Please try again.");
+                System.err.println("Something went wrong. Please try again.\n");
             }
         }
-        System.out.println("Thank you for considering VS Bank. Have a nice day!");
+        System.out.println("Thank you for considering VS Bank. Have a nice day!\n");
         scanner.close();
     }
 }
